@@ -3,10 +3,11 @@ CFLAGS = -Wall -Wextra -Werror
 WRITER_TARGET = writer
 SHOWIP_TARGET = showip
 SERVERDEMO_TARGET = serverDemo
+CLIENTDEMO_TARGET = clientDemo
 
 .PHONY: all clean
 
-all: $(WRITER_TARGET) $(SHOWIP_TARGET) $(SERVERDEMO_TARGET)
+all: $(WRITER_TARGET) $(SHOWIP_TARGET) $(SERVERDEMO_TARGET) $(CLIENTDEMO_TARGET)
 	rm -r *.o
 
 $(WERITER_TARGET): writer.o
@@ -27,6 +28,12 @@ $(SERVERDEMO_TARGET): serverDemo.o
 serverDemo.o: serverDemo.c
 	$(CC) $(CFLAGS) -c serverDemo.c
 
+$(CLIENTDEMO_TARGET): clientDemo.o
+	$(CC) $(CFLAGS) -o $(CLIENTDEMO_TARGET) clientDemo.o
+
+clientDemo.o: clientDemo.c
+	$(CC) $(CFLAGS) -c clientDemo.c
+
 clean:
-	rm -f $(WRITER_TARGET) $(SHOWIP_TARGET) $(SERVERDEMO_TARGET) *.o
+	rm -f $(WRITER_TARGET) $(SHOWIP_TARGET) $(SERVERDEMO_TARGET) $(CLIENTDEMO_TARGET) *.o
 
