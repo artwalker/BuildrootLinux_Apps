@@ -6,10 +6,13 @@ SERVERDEMO_TARGET = serverDemo
 CLIENTDEMO_TARGET = clientDemo
 LISTENER_TARGET = listener
 TALKER_TARGET = talker
+POLLSERVER_TARGET = pollserver
+SELECT_TARGET = select
+SELECTSERVER_TARGET = selectserver
 
 .PHONY: all clean
-
-all: $(WRITER_TARGET) $(SHOWIP_TARGET) $(SERVERDEMO_TARGET) $(CLIENTDEMO_TARGET) $(LISTENER_TARGET) $(TALKER_TARGET)
+ 
+all: $(WRITER_TARGET) $(SHOWIP_TARGET) $(SERVERDEMO_TARGET) $(CLIENTDEMO_TARGET) $(LISTENER_TARGET) $(TALKER_TARGET) $(POLLSERVER_TARGET) $(SELECT_TARGET) $(SELECTSERVER_TARGET)
 	rm -r *.o
 
 $(WERITER_TARGET): writer.o
@@ -42,12 +45,32 @@ $(LISTENER_TARGET): listener.o
 listener.o: listener.c
 	$(CC) $(CFLAGS) -c listener.c
 
+$(POLLSERVER_TARGET): pollserver.o
+	$(CC) $(CFLAGS) -o $(POLLSERVER_TARGET) pollserver.c
+
+pollserver.o: pollserver.c
+	$(CC) $(CFLAGS) -c pollserver.c
+
 $(TALKER_TARGET): talker.o
 	$(CC) $(CFLAGS) -o $(TALKER_TARGET) talker.o
 
 talker.o: talker.c
 	$(CC) $(CFLAGS) -c talker.c
 
+
+$(SELECT_TARGET): select.o
+	$(CC) $(CFLAGS) -o $(SELECT_TARGET) select.o
+
+select.o: select.c
+	$(CC) $(CFLAGS) -c select.c
+
+
+$(SELECTSERVER_TARGET): selectserver.o
+	$(CC) $(CFLAGS) -o $(SELECTSERVER_TARGET) selectserver.o
+
+selectserver.o: selectserver.c
+	$(CC) $(CFLAGS) -c selectserver.c
+
 clean:
-	rm -f $(WRITER_TARGET) $(SHOWIP_TARGET) $(SERVERDEMO_TARGET) $(CLIENTDEMO_TARGET) *.o $(LISTENER_TARGET) $(TALKER_TARGET)
+	rm -f $(WRITER_TARGET) $(SHOWIP_TARGET) $(SERVERDEMO_TARGET) $(CLIENTDEMO_TARGET) *.o $(LISTENER_TARGET) $(TALKER_TARGET) $(POLLSERVER_TARGET) $(SELECT_TARGET) $(SELECTSERVER_TARGET)
 
