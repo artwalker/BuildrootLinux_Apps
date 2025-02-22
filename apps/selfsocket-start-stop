@@ -1,0 +1,43 @@
+#!/bin/sh
+
+DAEMON_OPTS="-d"
+DAEMON_NAME="selfsocket"
+
+do_start() {
+	log_daemon_msg "Starting system $DAEMON_NAME daemon"
+	start-stop-daemon --start --quiet --name $DAEMON_NAME --exec $DAEMON_NAME -- $DAEMON_OPTS
+	log_end_msg $?
+}
+
+log_end_msg() {
+	if [ "$1" -eq 0 ]; then
+		echo "OK"
+	else
+		echo "FAIL"
+	fi
+}
+
+do_stop() {
+	log_daemon_msg "Stopping system $DAEMON_NAME daemon"
+	start-stop-daemon --stop --quiet --name $DAEMON_NAME
+	log_end_msg $?
+}
+
+case "$1" in
+	start)
+		do_start
+		;;
+	stop)
+		do_stop
+		;;
+	restart)
+		do_stop
+		do_start
+		;;
+	*)
+		echo "Usage: $0 {start|stop|restart}"
+		exit 1
+		;;
+esac
+
+exit 0
