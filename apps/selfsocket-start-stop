@@ -3,18 +3,22 @@
 DAEMON_OPTS="-d"
 DAEMON_NAME="selfsocket"
 
-do_start() {
-	log_daemon_msg "Starting system $DAEMON_NAME daemon"
-	start-stop-daemon --start --quiet --name $DAEMON_NAME --exec $DAEMON_NAME -- $DAEMON_OPTS
-	log_end_msg $?
-}
-
 log_end_msg() {
 	if [ "$1" -eq 0 ]; then
 		echo "OK"
 	else
 		echo "FAIL"
 	fi
+}
+
+log_daemon_msg() {
+	echo "$1"
+}
+
+do_start() {
+	log_daemon_msg "Starting system $DAEMON_NAME daemon"
+	start-stop-daemon --start --quiet --name $DAEMON_NAME --exec $DAEMON_NAME -- $DAEMON_OPTS
+	log_end_msg $?
 }
 
 do_stop() {
